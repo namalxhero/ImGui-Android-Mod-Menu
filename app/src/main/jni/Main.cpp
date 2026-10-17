@@ -25,7 +25,7 @@ DWORD Example = 0x0; // You can set Dword variable too
 
 bool (*old_get_BoolExample)(void *instance);
 bool get_BoolExample(void *instance) {
-    if (instance != NULL && Menu::SWITCH.BoolExample) {
+    if (instance != NULL && Menu::HACK.AtivarEsp) { // අලුත් HACK variable එකට මාරු කළා
         return true;
     }
     return old_get_BoolExample(instance);
@@ -34,7 +34,7 @@ bool get_BoolExample(void *instance) {
 float (*old_FloatExample)(void *instance); 
 float FloatExample(void *instance) { 
       if(instance!=NULL) { 
-        if (SWITCH.FloatExample) { 
+        if (Menu::HACK.AimbotEnable) { // Aimbot Enable වුණොත්
           return 100.0f; 
          } 
        } return old_FloatExample(instance); 
@@ -42,7 +42,7 @@ float FloatExample(void *instance) {
 
 int (*old_Level)(void *instance);
 int Level(void *instance) {
-    if (instance != NULL && SWITCH.IntExample) {
+    if (instance != NULL && Menu::HACK.AimLock) { // Aim Lock දාලා තියෙනව නම්
         return 9999;
     }
     return old_Level(instance);
@@ -50,7 +50,7 @@ int Level(void *instance) {
 
 void(*_VoidExample)(void *instance);
 void VoidExample(void *instance) {
-    if (SWITCH.VoidExample) {
+    if (instance != NULL) {
         *(bool *) ((uint64_t) instance + Visible) = true;
         *(float *) ((uint64_t) instance + Speed) = 0.01;
     }
@@ -62,7 +62,7 @@ void (*AddMoney)(void* _this, float coin);
 void (*_Coin)(void *instance);
 void Coin(void *instance) {
     if (instance != NULL) {
-        if(SWITCH.BoolExample) {
+        if(Menu::HACK.AtivarEsp) {
             AddMoney(instance, 10000000);
         }
     }
@@ -109,15 +109,13 @@ void *hack_thread(void *) {
     AttachIl2Cpp();
     Menu::Screen_get_height = (int (*)()) OBFBNM("UnityEngine", "Screen", "get_height", 0);
     Menu::Screen_get_width = (int (*)()) OBFBNM("UnityEngine", "Screen", "get_width", 0);
-    // use bynamemodding to get offsets from here.
     
     //get the class
     auto Player = getClass(OBFUSCATE("PlayerData"));
     
-    //use the class and method name to get the offset and put it in the variable we declared earlier.
-    
     Runner = getOffset(Player, OBFUSCATE("Run"), {"Map"});
     PlayerUpdate = getOffset(Player, OBFUSCATE("Update")); 
+    
     // Field offset
     AddField(Visible, Player, "isVisible");
     AddField(Speed, Player, "Speed");
@@ -126,18 +124,11 @@ void *hack_thread(void *) {
     Coins = getOffset(Player, OBFUSCATE("Currency"), {"scale"});
     AddPointer(AddMoney, Coins);
     
-    // And you can call namespace, class, methods all in once by
-    Coins = OBFBNM(""/*NAMESPACE*/, "PlayerData"/*CLASS*/, "Currency"/*METHOD*/, 1/*PARAMETER COUNT*/); 
-    
-    
     DetachIl2Cpp(); // Important when Using ByNameModding Functions
-    
     
     DHK(Runner, Level, old_Level); //DobbyHook
     HK(Runner, FloatExample, old_FloatExample); //MSHookFunction
   
-    
-    
     return NULL;
 }
 
@@ -159,4 +150,3 @@ void lib_main()
     pthread_t ptid;
     pthread_create(&ptid, NULL, hack_thread, NULL);
 }
-
