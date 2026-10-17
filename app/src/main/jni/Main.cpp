@@ -25,7 +25,7 @@ DWORD Example = 0x0; // You can set Dword variable too
 
 bool (*old_get_BoolExample)(void *instance);
 bool get_BoolExample(void *instance) {
-    if (instance != NULL && Menu::HACK.AtivarEsp) { // අලුත් HACK variable එකට මාරු කළා
+    if (instance != NULL && Menu::HACK.AtivarEsp) {
         return true;
     }
     return old_get_BoolExample(instance);
@@ -34,7 +34,7 @@ bool get_BoolExample(void *instance) {
 float (*old_FloatExample)(void *instance); 
 float FloatExample(void *instance) { 
       if(instance!=NULL) { 
-        if (Menu::HACK.AimbotEnable) { // Aimbot Enable වුණොත්
+        if (Menu::HACK.AimbotEnable) {
           return 100.0f; 
          } 
        } return old_FloatExample(instance); 
@@ -42,7 +42,7 @@ float FloatExample(void *instance) {
 
 int (*old_Level)(void *instance);
 int Level(void *instance) {
-    if (instance != NULL && Menu::HACK.AimLock) { // Aim Lock දාලා තියෙනව නම්
+    if (instance != NULL && Menu::HACK.AimLock) {
         return 9999;
     }
     return old_Level(instance);
@@ -106,6 +106,8 @@ void *hack_thread(void *) {
     address = findLibrary(targetLibName);
     LOGI(OBFUSCATE("pthread created"));
     
+    // --- CRASH FIX: පරණ සහ වැඩ නොකරන Offset/Hooks ටික තාවකාලිකව කමෙන්ට් කළා ---
+    /*
     AttachIl2Cpp();
     Menu::Screen_get_height = (int (*)()) OBFBNM("UnityEngine", "Screen", "get_height", 0);
     Menu::Screen_get_width = (int (*)()) OBFBNM("UnityEngine", "Screen", "get_width", 0);
@@ -128,6 +130,7 @@ void *hack_thread(void *) {
     
     DHK(Runner, Level, old_Level); //DobbyHook
     HK(Runner, FloatExample, old_FloatExample); //MSHookFunction
+    */
   
     return NULL;
 }
