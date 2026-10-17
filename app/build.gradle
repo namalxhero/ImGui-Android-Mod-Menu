@@ -31,9 +31,18 @@ android {
         }
     }
     ndkVersion = '22.0.7026061'
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = []
+        }
+    }
+
+    packagingOptions {
+        pickFirst 'lib/armeabi-v7a/libnative-lib.so'
+    }
 }
 
-//dependencies must be placed below 'android' brackets to get it work on AIDE
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
