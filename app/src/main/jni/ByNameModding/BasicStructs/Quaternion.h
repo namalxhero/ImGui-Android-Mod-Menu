@@ -4,7 +4,7 @@ using namespace std;
 #include "../macros.h"
 #include <math.h>
 #include <iostream>
-#include "vector3.h"
+#include "Vector3.h"
 
 #define SMALL_FLOAT 0.0000000001
 

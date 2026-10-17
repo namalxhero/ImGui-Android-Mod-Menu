@@ -26,7 +26,7 @@
 #include "Includes/obfuscate.h"
 #include "Includes/Utils.h"
 #include "KittyMemory/MemoryPatch.h"
-#include "includes/Dobby/dobby.h"
+#include "Includes/Dobby/dobby.h"
 #define targetLibName OBFUSCATE("libil2cpp.so")
 #include "Includes/Macros.h"
 #include "Includes/Loader.h"
@@ -34,7 +34,7 @@
 #include "Includes/FileWrapper.h"
 #include "Menu/Menu.h"
 #include "Color.h"
-#include "Hacks/Hooks.h"
+#include "Hacks/hooks.h"
 
 
 using namespace BNM;

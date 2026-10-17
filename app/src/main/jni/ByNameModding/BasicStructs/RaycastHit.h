@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vector2.h"
+#include "Vector2.h"
 
 struct RaycastHit {
     Vector3 Point, Normal;
