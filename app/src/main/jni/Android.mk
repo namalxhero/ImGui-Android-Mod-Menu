@@ -21,6 +21,7 @@ LOCAL_CPPFLAGS += -Wno-error=c++11-narrowing -fpermissive -Wall -fexceptions
 LOCAL_LDFLAGS += -Wl,--gc-sections,--strip-all,-llog
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2
 LOCAL_ARM_MODE := arm
+LOCAL_CPP_FEATURES := rtti exceptions
 
 LOCAL_STATIC_LIBRARIES := libdobby
 
